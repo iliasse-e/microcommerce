@@ -8,8 +8,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="config-service" />
         <module name="mproduits" />
-        <module name="mpaiement" />
         <module name="clientui" />
+        <module name="mpaiement" />
         <module name="mcommandes" />
         <module name="gateway" />
         <module name="discovery-service" />

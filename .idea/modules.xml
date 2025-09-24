@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/4668216-Optimisez-votre-architecture-Microservices.iml" filepath="$PROJECT_DIR$/.idea/4668216-Optimisez-votre-architecture-Microservices.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/microcommerce.iml" filepath="$PROJECT_DIR$/.idea/microcommerce.iml" />
     </modules>
   </component>
 </project>
