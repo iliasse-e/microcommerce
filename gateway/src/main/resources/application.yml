@@ -1,0 +1,18 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: r1
+          uri: http://localhost:9001
+          predicates:
+            - Path=/produits/**
+        - id: r2
+          uri: http://localhost:9002
+          predicates:
+            - Path=/commandes/**
+        - id: r3
+          uri: http://localhost:9003
+          predicates:
+            - Path=/paiement/**
+  application:
+    name: gateway
