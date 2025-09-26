@@ -11,6 +11,22 @@ La route de la requête est caratérisé par :
 2. Le prédicat (une condition à laquelle doit répondre la requête)
 3. Les filtres (module le contenu de la requête)
 
+Dans le fichier de configuration `application.yml` :
+
+```yml
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: r1
+          uri: http://localhost:9001
+          predicates:
+            - Path=/produits/**
+          filters:
+            - ...
+```
+
+
 | Fonction                         | Description                                                                 |
 |----------------------------------|-----------------------------------------------------------------------------|
 | **Routage dynamique**            | Redirige les requêtes selon le chemin, les headers, les paramètres         |
@@ -20,4 +36,8 @@ La route de la requête est caratérisé par :
 | **Transformation des requêtes**  | Modifie les headers, le corps ou les paramètres avant routage              |
 | **Logging & monitoring**         | Centralise les logs et les métriques des appels                            |
 
-## 
+## Discovery Service
+
+
+Dans l'exemple au dessus, les données sont entrées en dur, mais en réalité, la configuration est dynamique.
+Et pour cela on doit utiliser `Discovery Service`.
