@@ -13,7 +13,7 @@ La route de la requête est caratérisé par :
 
 Dans le fichier de configuration `application.yml` :
 
-```yml
+```yaml
 spring:
   cloud:
     gateway:
@@ -41,3 +41,38 @@ spring:
 
 Dans l'exemple au dessus, les données sont entrées en dur, mais en réalité, la configuration est dynamique.
 Et pour cela on doit utiliser `Discovery Service`.
+
+Utiliser `@EnableEurekaServer` dans le fichier main.
+
+`Spring eureka` propose une interface sur l'url `http://localhost:8761/`.
+
+Pour qu'eurka utilise l'adresse ip et non l'adresse local de la machine :
+
+```yaml
+eureka.instance.prefere-ip-address=true
+```
+
+Grace à Discovery service, on peut délester la gateway de faire le routing.
+Pour cela, on créé un `@Bean` dans Gateway, qui permet de gérer dynamiquement la config :
+
+```java
+@Bean
+DiscoveryClientRouteDefinitionLocator locator(ReactiveDiscoveryClient rdc, DiscoveryLocatorProperties dlp) {
+    return new DiscoveryClientRouteDefinitionLocator(rdc, dlp);
+}
+```
+
+A partir d'ici, il sera seulement nécessaire de donner au backend le nom du micro service dans l'URL.
+
+`http://192.168.1.12:8080/PRODUCT-SERVICE/produits`
+
+- On contacte la gateway : `192.168.1.12:8080`
+- On demande le micro service : PRODUCT-SERVICE / COMMANDE-SERVICE / PAIEMENT-SERVICE
+
+## Communication inter microservices & Open Feign
+
+Dans le contexte multi micro services, les applications ont besoin de consommer les Api Rest pour fonctionner (ex: le service commandes a besoin du service produits).
+
+On a besoin des `client Rest` comme `RestTemplate`, `WebClient` qui sont des modeles programmatiques, mais aussi `Open Feign` qui est un modèle déclaratif.
+
+Ces communications ne passent pas par la gateway.
