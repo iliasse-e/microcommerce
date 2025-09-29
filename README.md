@@ -54,10 +54,25 @@ spring:
 
 ## Discovery Service
 
-Dans l'exemple au dessus, les données sont entrées en dur, mais en réalité, la configuration est dynamique.
+Dans l'exemple précédent, les routes sont configurées de manière statiques, mais ici sera exploré la config dynamique.
 Et pour cela on doit utiliser `Discovery Service`.
 
-Utiliser `@EnableEurekaServer` dans le fichier main.
+Ce service est une sorte d'annuaire, auprès duquel vont s'enregistrer tous les microservices, qui permettra à la gateway
+de les contacter sans avoir à renseigner leur adresse.
+
+![Modele-gatewat-discovery.png](ressources/images/Modele-gatewat-discovery.png)
+
+Deux fonctions importantes :
+
+- **Register** : Chaque microservice s’enregistre auprès du Discovery Service à son démarrage (`@EnableDiscoveryClient` ou `spring.cloud.discovery.enabled=true`).
+- **Discover** : La Gateway interroge le Discovery Service pour connaître les instances disponibles (`spring.cloud.gateway.discovery.locator.enabled=true`). 
+Elle lui donne le nom du microservice (ex: 'USER-SERVICE') afin de récupérer l'adresse.
+
+### Prise en main
+
+Utiliser `@EnableEurekaServer` (qui est une implémentation de `Discovery service`) dans le fichier main.
+
+*Une autre implémentation qui existe est `Consul Discovery`*
 
 `Spring eureka` propose une interface sur l'url `http://localhost:8761/`.
 
@@ -155,4 +170,15 @@ Dans notre application, on utilise `CircuitBreaker` dans le microservice Command
 
 [Cours 2](https://www.youtube.com/watch?v=D0Vzlmczups)
 
-##
+## La configuration
+
+Afin d'éviter d'avoir une configuration pour chaque microservice. On va le centraliser : C'est le rôle de Config service.
+
+| Config-Repository            |
+|------------------------------|
+| application.properties       |
+| product-service.properties   |
+| commandes-service.properties |
+| paiement-service.properties  |
+
+Chaque service qui démarre va appeller requêter le service de configuration pour obtenir sa config.

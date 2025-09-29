@@ -1,14 +1,12 @@
 package com.mcommandes.model;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-
-@Entity
+/**
+ * Cette classe ne doit pas utiliser @Entity
+ * dans la mesure ou on ne veut pas créer de table Product dans ce microservice
+ * On veut seulement avoir le modele
+ */
 public class Product {
 
-    @Id
-    @GeneratedValue
     private int id;
 
     private String titre;
