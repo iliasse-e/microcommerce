@@ -182,3 +182,12 @@ Afin d'éviter d'avoir une configuration pour chaque microservice. On va le cent
 | paiement-service.properties  |
 
 Chaque service qui démarre va appeller requêter le service de configuration pour obtenir sa config.
+
+[Cours 3](https://www.youtube.com/watch?v=tApkq6u4sh4)
+
+Dans le config service, on utilise l'annotation suivante :
+
+```java
+@EnableConfigServer
+public class ConfigServiceApplication { }
+```
