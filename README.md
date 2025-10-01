@@ -14,6 +14,7 @@ Ce dépôt se base sur 3 cours vidéos.
 ##
 
 [Cours en ligne 1](https://www.youtube.com/watch?v=BqNZJwCvnAE)
+[Dépôt github du projet utilisé dans le cours](https://github.com/mohamedYoussfi/bank-account-ms-app.git)
 
 ## Spring Cloud Gateway
 
@@ -168,7 +169,7 @@ Dans notre application, on utilise `CircuitBreaker` dans le microservice Command
 
 ##
 
-[Cours 2](https://www.youtube.com/watch?v=D0Vzlmczups)
+[Cours 2 / résumé général](https://www.youtube.com/watch?v=D0Vzlmczups)
 
 ## La configuration
 
@@ -181,6 +182,10 @@ Afin d'éviter d'avoir une configuration pour chaque microservice. On va le cent
 | commandes-service.properties |
 | paiement-service.properties  |
 
+*Ce dossier sera déposé dans un dépot distant que l'on renseigne dans le fichier properties de config service*
+
+Dépôt de la config : https://github.com/iliasse-e/microcommerce-config-repo.git
+
 Chaque service qui démarre va appeller requêter le service de configuration pour obtenir sa config.
 
 [Cours 3](https://www.youtube.com/watch?v=tApkq6u4sh4)
@@ -191,3 +196,11 @@ Dans le config service, on utilise l'annotation suivante :
 @EnableConfigServer
 public class ConfigServiceApplication { }
 ```
+
+Chaque microservice va pouvoir chercher sa configuration, et cela grâce à la dépendance ```<artifactId>spring-cloud-starter-config</artifactId>```
+
+L'image ci dessous présente la configuration à implémenter.
+
+![config-client.png](ressources/images/config-client.png)
+
+Pour que la config se mette à jour, on va avoir besoin de `Actuator` et de l'annotation `@RefreshScope`
