@@ -7,6 +7,8 @@ L'idée de ce dépot est la gestion d'une application microservices via l'ensemb
 - Client Rest (Open Feign)
 - Service de config
 
+*Les applications doivent être lancé dans un ordre spécifique (config - discovery - gateway -> microservices).*
+
 ![microservices-general.png](ressources/images/microservices-general.png)
 
 Ce dépôt se base sur 3 cours vidéos.
@@ -199,8 +201,18 @@ public class ConfigServiceApplication { }
 
 Chaque microservice va pouvoir chercher sa configuration, et cela grâce à la dépendance ```<artifactId>spring-cloud-starter-config</artifactId>```
 
+Dans le fichier `application.properties` de chaque microservice :
+
+```properties
+spring.application.name=paiement-service # nom nécessaire pour s'identifier auprès du server de config
+
+# Import des config
+spring.profiles.active=dev # se connectera au fichier paiement-service-dev.properties
+spring.config.import=optional:configserver:http://localhost:9999 # se connecte au port suivant pour trouver le server de config
+```
+
 L'image ci dessous présente la configuration à implémenter.
 
 ![config-client.png](ressources/images/config-client.png)
 
-Pour que la config se mette à jour, on va avoir besoin de `Actuator` et de l'annotation `@RefreshScope`
+Pour que la config se mette à jour, on va avoir besoin de `Actuator` et de l'annotation `@RefreshScope` (non implémenté à l'instant).
